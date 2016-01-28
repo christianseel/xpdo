@@ -2029,6 +2029,13 @@ class xPDO {
             if (isset($target['options'])) $targetOptions =& $target['options'];
             $target = isset($target['target']) ? $target['target'] : 'ECHO';
         }
+        if (empty($file) && function_exists('debug_backtrace')) {
+            $backtrace = @debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+            if ($backtrace && isset($backtrace[2])) {
+                $file = $backtrace[2]['file'];
+                $line = $backtrace[2]['line'];
+            }
+        }
         if (empty($file) && isset($_SERVER['SCRIPT_NAME'])) {
             $file= $_SERVER['SCRIPT_NAME'];
         }
